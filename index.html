@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nimsha Shehari — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14110F;
+    --bg-soft:#1C1712;
+    --card:#211B16;
+    --card-border:rgba(245,241,233,0.08);
+    --lime:#C6FF3D;
+    --coral:#FF5D73;
+    --indigo:#8C7AF0;
+    --text:#F5F1E9;
+    --muted:#A79E92;
+    --radius:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px;}
+  img{display:block;max-width:100%;}
+
+  /* background texture */
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(600px 400px at 85% -5%, rgba(198,255,61,0.08), transparent 60%),
+      radial-gradient(500px 400px at 0% 30%, rgba(255,93,115,0.07), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(20,17,15,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--card-border);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;max-width:1140px;margin:0 auto;
+  }
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;}
+  .logo span{color:var(--lime);}
+  .nav-links{display:flex;gap:30px;font-size:0.92rem;}
+  .nav-links a{position:relative;color:var(--muted);transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-6px;width:0;height:2px;
+    background:var(--lime);transition:width .25s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer;}
+  @media (max-width:800px){
+    .nav-links{
+      position:absolute;top:100%;left:0;right:0;flex-direction:column;
+      background:var(--bg-soft);padding:22px 32px;gap:18px;
+      transform:translateY(-8px);opacity:0;pointer-events:none;transition:all .25s ease;
+    }
+    .nav-links.open{transform:translateY(0);opacity:1;pointer-events:auto;}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:100px 0 80px;position:relative;z-index:1;}
+  .hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:60px;align-items:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;font-size:0.78rem;
+    letter-spacing:0.12em;text-transform:uppercase;color:var(--lime);margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:'';width:8px;height:8px;border-radius:50%;background:var(--lime);
+    box-shadow:0 0 0 4px rgba(198,255,61,0.15);
+  }
+  .hero h1{font-size:clamp(2.4rem,5vw,3.6rem);line-height:1.08;margin-bottom:14px;}
+  .role-line{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(1.1rem,2.2vw,1.5rem);
+    color:var(--coral);
+    min-height:2.2em;
+    margin-bottom:22px;
+    display:flex;align-items:center;
+  }
+  .role-line .cursor{
+    display:inline-block;width:2px;height:1.2em;background:var(--coral);
+    margin-left:4px;animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  .hero p.lede{font-size:1.05rem;color:var(--muted);max-width:480px;margin-bottom:32px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;
+    font-size:0.9rem;font-weight:500;transition:transform .2s, box-shadow .2s;
+  }
+  .btn-primary{background:var(--lime);color:#14110F;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(198,255,61,0.25);}
+  .btn-ghost{border:1px solid var(--card-border);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--coral);color:var(--coral);}
+  .socials{display:flex;gap:14px;}
+  .social-icon{
+    width:40px;height:40px;border-radius:50%;border:1px solid var(--card-border);
+    display:flex;align-items:center;justify-content:center;transition:border-color .2s, transform .2s;
+  }
+  .social-icon:hover{border-color:var(--lime);transform:translateY(-2px);}
+  .social-icon svg{width:18px;height:18px;}
+
+  .hero-photo-wrap{position:relative;display:flex;justify-content:center;}
+  .hero-photo{
+    width:320px;height:320px;border-radius:50%;object-fit:cover;
+    border:3px solid var(--card-border);position:relative;z-index:2;
+  }
+  .orbit-ring{
+    position:absolute;border:1px dashed rgba(245,241,233,0.15);border-radius:50%;
+    z-index:1;
+  }
+  .orbit-1{width:380px;height:380px;top:-30px;left:calc(50% - 190px);}
+  .orbit-2{width:440px;height:440px;top:-60px;left:calc(50% - 220px);animation:spin 40s linear infinite;}
+  @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .badge-chip{
+    position:absolute;background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;padding:10px 16px;font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;z-index:3;box-shadow:0 10px 24px rgba(0,0,0,0.3);
+  }
+  .chip-1{top:10px;right:-10px;color:var(--lime);}
+  .chip-2{bottom:20px;left:-20px;color:var(--coral);}
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-photo-wrap{order:-1;margin-bottom:20px;}
+  }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:80px 0;position:relative;z-index:1;}
+  .section-head{margin-bottom:46px;max-width:600px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-size:clamp(1.8rem,3.2vw,2.4rem);}
+  .section-head p{color:var(--muted);margin-top:12px;}
+  .divider{height:1px;background:var(--card-border);max-width:1140px;margin:0 auto;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:52px;align-items:center;}
+  .about-photo-card{
+    position:relative;border-radius:var(--radius);overflow:hidden;
+    border:1px solid var(--card-border);
+  }
+  .about-photo-card img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5;}
+  .about-photo-tag{
+    position:absolute;bottom:16px;left:16px;background:rgba(20,17,15,0.75);
+    backdrop-filter:blur(6px);border:1px solid var(--card-border);border-radius:10px;
+    padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--lime);
+  }
+  .about-text p{font-size:1.03rem;color:#D8D2C6;margin-bottom:16px;}
+  @media (max-width:860px){.about-grid{grid-template-columns:1fr;}.about-photo-card{max-width:320px;margin:0 auto 10px;}}
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-card{
+    background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+    padding:34px;
+  }
+  .exp-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-bottom:18px;}
+  .exp-title{font-size:1.3rem;color:var(--text);}
+  .exp-org{color:var(--coral);font-size:0.95rem;margin-top:4px;}
+  .exp-period{font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--muted);white-space:nowrap;}
+  .exp-list{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .exp-list li{position:relative;padding-left:22px;color:#D8D2C6;font-size:0.95rem;}
+  .exp-list li::before{content:'▸';position:absolute;left:0;color:var(--lime);}
+
+  /* ---------- PROJECTS ---------- */
+  .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media (max-width:960px){.work-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.work-grid{grid-template-columns:1fr;}}
+  .project{
+    background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+    padding:26px;display:flex;flex-direction:column;transition:transform .25s ease, border-color .25s ease;
+  }
+  .project:hover{transform:translateY(-4px);border-color:rgba(198,255,61,0.3);}
+  .tool-tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+  .tag{
+    font-size:0.7rem;padding:5px 10px;border-radius:999px;
+    background:rgba(140,122,240,0.14);color:var(--indigo);font-family:'JetBrains Mono',monospace;
+  }
+  .project h3{font-size:1.08rem;margin-bottom:10px;color:var(--text);}
+  .project p.desc{font-size:0.87rem;color:var(--muted);flex-grow:1;}
+
+  /* ---------- PUBLICATIONS ---------- */
+  .pub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  @media (max-width:800px){.pub-grid{grid-template-columns:1fr;}}
+  .pub-card{
+    background:linear-gradient(155deg, rgba(198,255,61,0.06), transparent 60%);
+    border:1px solid var(--card-border);border-radius:var(--radius);padding:28px;
+  }
+  .pub-card .pub-tag{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.7rem;
+    color:var(--lime);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;
+  }
+  .pub-card h3{font-size:1.05rem;margin-bottom:10px;line-height:1.4;}
+  .pub-card p{font-size:0.88rem;color:var(--muted);}
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+  @media (max-width:760px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-cat{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:26px;}
+  .skill-cat .cap{
+    font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--coral);margin-bottom:16px;display:block;
+  }
+  .pill-list{display:flex;flex-wrap:wrap;gap:9px;}
+  .pill{padding:7px 14px;border:1px solid var(--card-border);border-radius:999px;font-size:0.84rem;color:var(--text);}
+
+  /* ---------- EDUCATION TIMELINE ---------- */
+  .timeline{position:relative;padding-left:32px;}
+  .timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--card-border);}
+  .tl-item{position:relative;padding-bottom:36px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:'';position:absolute;left:-32px;top:4px;width:13px;height:13px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--lime);
+  }
+  .tl-period{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--lime);margin-bottom:6px;}
+  .tl-item h3{font-size:1.08rem;margin-bottom:6px;line-height:1.4;}
+  .tl-item .meta{font-size:0.88rem;color:var(--muted);}
+  .tl-item .meta b{color:var(--coral);font-weight:500;}
+
+  /* certifications */
+  .cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:36px;}
+  @media (max-width:700px){.cert-grid{grid-template-columns:1fr;}}
+  .cert-item{
+    display:flex;align-items:center;gap:12px;background:var(--card);
+    border:1px solid var(--card-border);border-radius:12px;padding:14px 18px;font-size:0.88rem;
+  }
+  .cert-item .dot{width:6px;height:6px;border-radius:50%;background:var(--coral);flex-shrink:0;}
+
+  /* achievements */
+  .ach-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px;}
+  @media (max-width:700px){.ach-grid{grid-template-columns:1fr;}}
+  .ach-item{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:16px 20px;font-size:0.88rem;color:#D8D2C6;
+  }
+
+  /* ---------- CONTACT ---------- */
+  #contact{text-align:center;}
+  #contact h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:16px;}
+  #contact p.sub{color:var(--muted);max-width:460px;margin:0 auto 34px;}
+  .contact-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:900px;margin:0 auto 34px;}
+  @media (max-width:800px){.contact-cards{grid-template-columns:repeat(2,1fr);}}
+  .contact-card{
+    background:var(--card);border:1px solid var(--card-border);border-radius:14px;
+    padding:22px 16px;transition:border-color .2s, transform .2s;
+  }
+  .contact-card:hover{border-color:var(--lime);transform:translateY(-3px);}
+  .contact-card .cap{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+  .contact-card .val{font-size:0.88rem;color:var(--text);word-break:break-word;}
+  .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+  footer{text-align:center;padding:30px 0 50px;font-size:0.8rem;color:var(--muted);}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important;transition-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+  a:focus-visible, button:focus-visible{outline:2px solid var(--lime);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Nimsha<span>.</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#work">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow mono">Open to opportunities</div>
+      <h1>Hi, I'm Nimsha Shehari.</h1>
+      <div class="role-line mono"><span id="roleText"></span><span class="cursor"></span></div>
+      <p class="lede">I turn raw data into decisions — building KPI dashboards, cleaning messy datasets, and forecasting what's coming next. Statistics &amp; Computing graduate, Wayamba University of Sri Lanka.</p>
+      <div class="hero-ctas">
+        <a href="#work" class="btn btn-primary">See my work →</a>
+        <a href="#contact" class="btn btn-ghost">Contact me</a>
+      </div>
+      <div class="socials">
+        <a class="social-icon" href="https://linkedin.com/in/nimsha-shehari" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h4v1.7c.6-1 1.9-2 3.7-2 3 0 4.3 2 4.3 5.3V21h-4v-6c0-1.5-.5-2.5-1.9-2.5-1 0-1.6.7-1.9 1.4-.1.3-.1.6-.1 1V21H9V9z" fill="currentColor"/></svg>
+        </a>
+        <a class="social-icon" href="https://github.com/Nimsha-Shehari" target="_blank" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.4 2.9 8.1 6.9 9.4.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.5-1.1-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.4-1.1.6-1.4-2.3-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .9-.3 2.8 1a9.6 9.6 0 0 1 5.1 0c1.9-1.3 2.8-1 2.8-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7 1 .7 1.9v2.9c0 .3.2.6.7.5A10 10 0 0 0 22 12c0-5.5-4.5-10-10-10z" fill="currentColor"/></svg>
+        </a>
+        <a class="social-icon" href="mailto:nimshakulathunga@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 5h18v14H3V5zm0 0l9 7 9-7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="orbit-ring orbit-2"></div>
+      <div class="orbit-ring orbit-1"></div>
+      <img class="hero-photo" src="profile.jpg" alt="Nimsha Shehari">
+      <div class="badge-chip chip-1">GPA 3.7</div>
+      <div class="badge-chip chip-2">First Class Hons.</div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow mono">About</div>
+      <h2>Numbers first, story second.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-photo-card reveal">
+        <img src="profile.jpg" alt="Nimsha Shehari">
+        <div class="about-photo-tag">Kuliyapitiya, Sri Lanka</div>
+      </div>
+      <div class="about-text reveal">
+        <p>I'm Nimsha Shehari, a Data Analyst with a strong background in statistics, mathematics, computing and data analysis. I have hands-on experience building KPI dashboards and analyzing business data using Power BI, Looker Studio, and Excel.</p>
+        <p>I work with SQL and Python to clean, analyze, and transform data into meaningful insights. I'm passionate about data visualization and creating clear, interactive dashboards that support better decision-making.</p>
+        <p>Currently, I'm focused on improving my analytics, AI, and machine learning skills to grow as a data analyst.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow mono">Experience</div>
+      <h2>Where I've put this to work</h2>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-top">
+        <div>
+          <div class="exp-title">Process &amp; Data Analyst Intern</div>
+          <div class="exp-org">Ansell Lanka (Pvt) Ltd — Biyagama</div>
+        </div>
+        <div class="exp-period mono">Mar 2025 – Jan 2026</div>
+      </div>
+      <ul class="exp-list">
+        <li>Conducted variance analysis and root-cause investigations on financial and operational data, presenting structured findings to cross-functional management teams.</li>
+        <li>Built Power BI dashboards used by multiple departments for real-time KPI tracking, financial performance monitoring, and management decision-making.</li>
+        <li>Prepared and delivered performance reports and data-driven presentations for senior management, translating complex findings into clear business insights.</li>
+        <li>Identified and investigated data quality issues, contributing to initiatives that reduced product rejection rates and improved reporting accuracy.</li>
+        <li>Evaluated business requirements and recommended enhancements to ERP reporting workflows and data systems.</li>
+        <li>Collaborated independently with stakeholders across production, quality, and finance functions to gather requirements and deliver analytical solutions.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow mono">Selected Work</div>
+      <h2>Dashboards &amp; data projects</h2>
+      <p>A mix of BI dashboards, statistical models, and applications built end to end.</p>
+    </div>
+    <div class="work-grid">
+
+      <div class="project reveal">
+        <div class="tool-tag-row"><span class="tag">Power BI</span><span class="tag">DAX</span></div>
+        <h3>Motor Insurance Dashboard</h3>
+        <p class="desc">Interactive Power BI dashboard analysing a motor insurer's financial performance from 2014–2018 across 508,000 policies. Surfaced a 44% premium-to-claim ratio and identified Toyota, Isuzu, and Iveco as the top claim drivers.</p>
+      </div>
+
+      <div class="project reveal">
+        <div class="tool-tag-row"><span class="tag">R</span><span class="tag">MINITAB</span></div>
+        <h3>Gold Price Forecasting</h3>
+        <p class="desc">Applied ARIMA and trend decomposition to historical gold price data to forecast future movements, validating accuracy with RMSE and MAPE.</p>
+      </div>
+
+      <div class="project reveal">
+        <div class="tool-tag-row"><span class="tag">MINITAB</span><span class="tag">Time Series</span></div>
+        <h3>Hospitality Workforce Analysis</h3>
+        <p class="desc">Time series analysis on California hospitality industry employment data to identify seasonal staffing patterns.</p>
+      </div>
+
+      <div class="project reveal">
+        <div class="tool-tag-row"><span class="tag">Flutter</span><span class="tag">Python / ML</span><span class="tag">Firebase</span></div>
+        <h3>AI Receipt Expense Tracker</h3>
+        <p class="desc">Mobile app using OCR and machine learning to automatically extract and categorize expenses from receipt photos into Firebase.</p>
+      </div>
+
+      <div class="project reveal">
+        <div class="tool-tag-row"><span class="tag">HTML/CSS/JS</span><span class="tag">Node.js</span></div>
+        <h3>GPA Calculator &amp; Result Predictor</h3>
+        <p class="desc">Web-based decision-support tool applying statistical prediction techniques to forecast academic outcomes for students.</p>
+      </div>
+
+      <div class="project reveal">
+        <div class="tool-tag-row"><span class="tag">Flutter</span><span class="tag">Bootstrap</span><span class="tag">Firebase</span></div>
+        <h3>University Vehicle Management System</h3>
+        <p class="desc">Dual-platform (web &amp; mobile) system for vehicle booking, maintenance scheduling, and usage tracking.</p>
+      </div>
+
+      <div class="project reveal">
+        <div class="tool-tag-row"><span class="tag">PHP</span><span class="tag">MySQL</span></div>
+        <h3>Fertilizer Shop Management System</h3>
+        <p class="desc">Database-driven inventory and transaction management system built to streamline shop operations.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow mono">Research</div>
+      <h2>Published work</h2>
+    </div>
+    <div class="pub-grid">
+      <div class="pub-card reveal">
+        <span class="pub-tag mono">Published Research</span>
+        <h3>Time Series Analysis and Forecasting of Sri Lanka's Electricity Usage: Statistical vs Machine Learning Models</h3>
+        <p>Compared statistical and ML models (VAR, XGBoost, Random Forest, LSTM) to forecast sector-wise electricity demand for policy planning, evaluating performance with RMSE and MAE to recommend the best-fit model per sector.</p>
+      </div>
+      <div class="pub-card reveal">
+        <span class="pub-tag mono">Industry Research</span>
+        <h3>Investigating Root Causes of High Glove Rejection Rate in the TCR Machine</h3>
+        <p>Applied multiple regression analysis in R to quantify the impact of defect types on rejection rates and delivered process-improvement recommendations that supported measurable defect reduction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow mono">Toolkit</div>
+      <h2>What I work with</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-cat reveal">
+        <span class="cap">Analytics &amp; Data Science</span>
+        <div class="pill-list">
+          <span class="pill">Statistical Analysis</span>
+          <span class="pill">Predictive Analytics</span>
+          <span class="pill">Prescriptive Analytics</span>
+          <span class="pill">Data Modelling</span>
+          <span class="pill">Forecasting</span>
+          <span class="pill">Variance Analysis</span>
+          <span class="pill">KPI Reporting</span>
+          <span class="pill">Machine Learning</span>
+          <span class="pill">Business Intelligence</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <span class="cap">Programming &amp; Tools</span>
+        <div class="pill-list">
+          <span class="pill">SQL</span>
+          <span class="pill">Python</span>
+          <span class="pill">R</span>
+          <span class="pill">Power BI</span>
+          <span class="pill">MS Excel (Advanced)</span>
+          <span class="pill">Microsoft Dynamics 365</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <span class="cap">Visualization &amp; Reporting</span>
+        <div class="pill-list">
+          <span class="pill">Power BI Dashboards</span>
+          <span class="pill">Data Visualization</span>
+          <span class="pill">Reporting Automation</span>
+          <span class="pill">ERP Reporting Systems</span>
+          <span class="pill">MS PowerPoint</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <span class="cap">Professional</span>
+        <div class="pill-list">
+          <span class="pill">Cross-functional Collaboration</span>
+          <span class="pill">Data Quality Management</span>
+          <span class="pill">Analytical Thinking</span>
+          <span class="pill">Communication</span>
+          <span class="pill">Negotiation</span>
+          <span class="pill">Time Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow mono">Education</div>
+      <h2>Academic background</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-period mono">2021 – 2025</div>
+        <h3>B.Sc. (Joint Major) — Mathematics, Mathematical Modelling &amp; Statistics, and Computing &amp; Information Systems</h3>
+        <div class="meta"><b>Wayamba University of Sri Lanka</b> · First Class Honours · GPA 3.7 · Dean's List, Level 3 &amp; 4</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period mono">2021</div>
+        <h3>Diploma in Information Technology</h3>
+        <div class="meta"><b>Wayamba University of Sri Lanka</b></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period mono">2024</div>
+        <h3>Certificate — Industrial Engineering &amp; Process Excellence</h3>
+        <div class="meta"><b>APEX Institute of Management Services</b></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period mono">2024</div>
+        <h3>Certificate — Business English</h3>
+        <div class="meta"><b>Wayamba University of Sri Lanka</b></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period mono">2019</div>
+        <h3>G.C.E. Advanced Level — Physical Science Stream</h3>
+        <div class="meta"><b>Central College, Kuliyapitiya</b></div>
+      </div>
+    </div>
+
+    <div class="section-head reveal" style="margin-top:60px;">
+      <div class="eyebrow mono">Certifications</div>
+      <h2>Continuous learning</h2>
+    </div>
+    <div class="cert-grid reveal">
+      <div class="cert-item"><span class="dot"></span>Data Visualization with Power BI — Great Learning</div>
+      <div class="cert-item"><span class="dot"></span>Master Microsoft Power BI — Alison</div>
+      <div class="cert-item"><span class="dot"></span>Career Skills in Data Analytics — LinkedIn Learning</div>
+      <div class="cert-item"><span class="dot"></span>Business Analysis &amp; Process Management — Coursera</div>
+      <div class="cert-item"><span class="dot"></span>Foundation of Project Management — University of Moratuwa</div>
+      <div class="cert-item"><span class="dot"></span>Full Stack Developer Training — University of Moratuwa</div>
+      <div class="cert-item"><span class="dot"></span>Python Programming Certificate — University of Moratuwa</div>
+    </div>
+
+    <div class="section-head reveal" style="margin-top:60px;">
+      <div class="eyebrow mono">Leadership</div>
+      <h2>Beyond the spreadsheet</h2>
+    </div>
+    <div class="ach-grid reveal">
+      <div class="ach-item">Junior Treasurer — IEEE Student Branch, Wayamba University (2024)</div>
+      <div class="ach-item">Treasurer — IEEE WIE Student Branch, Wayamba University (2024)</div>
+      <div class="ach-item">Assistant Treasurer — IEEE WIE Student Branch, Wayamba University (2023)</div>
+      <div class="ach-item">Volunteering Coordinator — IEEE SL Inspire Career Compass Programme</div>
+      <div class="ach-item">Member — Mathematical Society &amp; Computer Society</div>
+      <div class="ach-item">Inter-University Athletic Meet — Running Events, Wayamba University</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow mono" style="justify-content:center;display:inline-flex;">Get in touch</div>
+    <h2>Let's talk about your data.</h2>
+    <p class="sub">Open to roles as a Data Analyst, Dashboard Developer, Reporting Analyst, or Planning Analyst.</p>
+    <div class="contact-cards">
+      <div class="contact-card"><div class="cap">Email</div><div class="val">nimshakulathunga@gmail.com</div></div>
+      <div class="contact-card"><div class="cap">Phone</div><div class="val">+94 71 650 1404</div></div>
+      <div class="contact-card"><div class="cap">Location</div><div class="val">Kuliyapitiya, Sri Lanka</div></div>
+      <div class="contact-card"><div class="cap">LinkedIn</div><div class="val">nimsha-shehari</div></div>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:nimshakulathunga@gmail.com" class="btn btn-primary">Email me</a>
+      <a href="https://linkedin.com/in/nimsha-shehari" target="_blank" class="btn btn-ghost">LinkedIn</a>
+      <a href="https://github.com/Nimsha-Shehari" target="_blank" class="btn btn-ghost">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Nimsha Shehari. Data Analyst · Dashboard Developer · Reporting Analyst · Planning Analyst.</footer>
+
+<script>
+  // nav toggle
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el => io.observe(el));
+
+  // typewriter rotating roles
+  const roles = ["Data Analyst", "Dashboard Developer", "Reporting Analyst", "Planning Analyst"];
+  const roleEl = document.getElementById('roleText');
+  let roleIdx = 0, charIdx = 0, deleting = false;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function typeLoop(){
+    const current = roles[roleIdx];
+    if(!deleting){
+      charIdx++;
+      roleEl.textContent = current.slice(0, charIdx);
+      if(charIdx === current.length){ deleting = true; setTimeout(typeLoop, 1400); return; }
+    } else {
+      charIdx--;
+      roleEl.textContent = current.slice(0, charIdx);
+      if(charIdx === 0){ deleting = false; roleIdx = (roleIdx+1) % roles.length; }
+    }
+    setTimeout(typeLoop, deleting ? 45 : 90);
+  }
+
+  if(prefersReduced){
+    roleEl.textContent = roles[0];
+  } else {
+    typeLoop();
+  }
+</script>
+
+</body>
+</html>
